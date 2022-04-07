@@ -7,6 +7,8 @@ import { SRC_DIR } from './config.mjs';
 import { __dirname } from './dirname.mjs';
 import { color, nbr2seconds, partition, printLog } from './utils.mjs';
 
+const startTime = Date.now();
+
 // Multi-thread config
 sharp.concurrency(1); // nbr of threads libvips' should create to process each image
 console.log(`concurrency: ${color('yellow', sharp.concurrency())}`);
@@ -16,9 +18,6 @@ console.log(`nbr of workers: ${color('yellow', numCPUs)}`);
 // we create a pool of X workers
 const workerPath = path.join(__dirname, 'worker.mjs');
 const pool = new StaticPool({ size: numCPUs, task: workerPath });
-
-// we get all products
-const startTime = Date.now();
 
 // we get all the frames
 const filenames = readdirSync(path.join(SRC_DIR));
